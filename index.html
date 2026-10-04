@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="DiTaR learns dense rewards for robot reinforcement learning from task-relevant latent dynamics in action-free videos.">
+  <meta property="og:title" content="DiTaR: Disentangling Task-Relevant Latent Dynamics for Reward Modeling">
+  <meta property="og:description" content="Dense rewards from action-free video, computed over task-relevant latent dynamics rather than generic visual variation.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ditarr.github.io/">
+  <meta property="og:image" content="https://ditarr.github.io/assets/images/posters/teaser.webp">
+  <link rel="canonical" href="https://ditarr.github.io/">
+  <title>DiTaR: Disentangling Task-Relevant Latent Dynamics for Reward Modeling</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#method">Skip to method</a>
+
+  <header class="project-header wrap">
+    <h1>DiTaR</h1>
+    <h2>Disentangling Task-Relevant Latent Dynamics for Reward Modeling</h2>
+    <ul class="author-list" aria-label="Authors in paper order">
+      <li><span class="author-name">Dayou Li</span><sup>1,*</sup></li>
+      <li><span class="author-name">Jionghao Wang</span><sup>1,*</sup></li>
+      <li><span class="author-name">Peihao Wang</span><sup>2</sup></li>
+      <li><span class="author-name">Jiuzhou Lei</span><sup>1</sup></li>
+      <li><span class="author-name">Hao Wang</span><sup>1</sup></li>
+      <li><span class="author-name">Jichen Chai</span><sup>3</sup></li>
+      <li><span class="author-name">Hezhen Hu</span><sup>2</sup></li>
+      <li><span class="author-name">Minghui Zheng</span><sup>1</sup></li>
+      <li><span class="author-name">Zhangyang Wang</span><sup>2</sup></li>
+      <li><span class="author-name">Xin Li</span><sup>1</sup></li>
+      <li><span class="author-name">Wenping Wang</span><sup>1</sup></li>
+      <li><span class="author-name">Zhiwen Fan</span><sup>1,†</sup></li>
+    </ul>
+    <ul class="affiliation-list" aria-label="Author affiliations">
+      <li><sup>1</sup> Texas A&amp;M University</li>
+      <li><sup>2</sup> University of Texas at Austin</li>
+      <li><sup>3</sup> Georgia Institute of Technology</li>
+    </ul>
+    <p class="contribution-note"><span><sup>*</sup> Equal contribution</span><span><sup>†</sup> Corresponding author</span></p>
+    <ul class="affiliation-logos" aria-label="Affiliation logos">
+      <li class="logo-tamu"><img src="assets/logos/tamu.svg" alt="Texas A&amp;M University" decoding="async"></li>
+      <li class="logo-ut"><img src="assets/logos/ut-austin.svg" alt="The University of Texas at Austin" decoding="async"></li>
+      <li class="logo-gt"><img src="assets/logos/georgia-tech.png" alt="Georgia Institute of Technology" decoding="async"></li>
+    </ul>
+  </header>
+
+  <section class="hero wrap" aria-label="DiTaR in 30 seconds">
+    <div class="hero-inner">
+      <div class="hero-frame">
+      <video id="teaser-video" class="autoplay-video" autoplay muted loop playsinline preload="auto" poster="assets/images/posters/teaser.webp" aria-label="30-second overview of DiTaR: dense rewards from video through task-relevant dynamics, robustness to lighting changes, recognizing task progress, simulated manipulation, and policy learning and real-world results"><source src="assets/videos/teaser.mp4" type="video/mp4"></video>
+        <button type="button" class="video-toggle" data-video-toggle="teaser-video" aria-label="Pause video">
+          <svg class="icon-pause" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 4h3v12H5zm7 0h3v12h-3z"/></svg>
+          <svg class="icon-play" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="m6 3 11 7-11 7z"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <main id="main" class="wrap">
+    <section class="intro" aria-label="Summary and links">
+      <p class="tagline">DiTaR learns dense rewards from <b>task-relevant latent dynamics</b> in action-free video, so the reward follows the task and not how the scene looks.</p>
+      <nav class="link-pills" aria-label="Resources">
+        <!-- Replace <span class="pill is-soon"> with <a class="pill" href="..."> once the paper link is public. -->
+        <span class="pill is-soon" aria-label="Paper, coming soon">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M12 5h16l9 9v29H12Z"/><path d="M28 5v10h9M19 23h11M19 29h11M19 35h7"/></svg>
+          Paper <small>soon</small>
+        </span>
+        <a class="pill" href="https://github.com/phai-lab/DiTaR" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="m16 13-11 11 11 11M32 13l11 11-11 11M28 8l-8 32"/></svg>
+          Code
+        </a>
+        <a class="pill" href="#citation">
+          <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M10 8h22l6 6v26H10Z"/><path d="M17 20c-2 0-3 1-3 3v2c0 1-1 2-2 2 1 0 2 1 2 2v2c0 2 1 3 3 3M31 20c2 0 3 1 3 3v2c0 1 1 2 2 2-1 0-2 1-2 2v2c0 2-1 3-3 3"/></svg>
+          BibTeX
+        </a>
+      </nav>
+      <div class="highlights" aria-label="Headline results">
+        <div class="highlight">
+          <strong>94.3<span class="unit">%</span></strong>
+          <span class="hl-label">MetaWorld-v3 success</span>
+          <span class="hl-note">12 tasks · best baseline 65.2%</span>
+        </div>
+        <div class="highlight">
+          <strong>87.5<span class="unit">%</span></strong>
+          <span class="hl-label">ManiSkill success</span>
+          <span class="hl-note">4 tasks · best baseline 74.6%</span>
+        </div>
+        <div class="highlight">
+          <strong>83.3<span class="unit">%</span></strong>
+          <span class="hl-label">Real-world offline RL</span>
+          <span class="hl-note">Franka arm · best baseline 43.3%</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="method" class="section" aria-labelledby="method-title">
+      <h3 id="method-title" class="section-title">How DiTaR Works</h3>
+      <div class="framing">
+        <div class="frame-card">
+          <span class="kicker">The problem</span>
+          <p>Existing video rewards score frames in an entangled visual space. A change in lighting or camera moves the reward as much as real task progress does, so the RL agent ends up optimizing the wrong thing.</p>
+        </div>
+        <div class="frame-card is-idea">
+          <span class="kicker">The idea</span>
+          <p>First learn a latent space that keeps only task-relevant change. Then reward the agent when its transitions fit the task's dynamics in that space better and better.</p>
+        </div>
+      </div>
+
+      <div class="walkthrough" data-walkthrough>
+        <div class="step-toolbar">
+          <div class="segmented step-tabs" role="tablist" aria-label="Method steps">
+            <button type="button" role="tab" class="active" aria-selected="true" id="step-tab-0" aria-controls="step-0" data-step="0">Overview</button>
+            <button type="button" role="tab" aria-selected="false" id="step-tab-1" aria-controls="step-1" data-step="1" tabindex="-1"><span class="tab-num">1</span>Encode</button>
+            <button type="button" role="tab" aria-selected="false" id="step-tab-2" aria-controls="step-2" data-step="2" tabindex="-1"><span class="tab-num">2</span>Stage 1</button>
+            <button type="button" role="tab" aria-selected="false" id="step-tab-3" aria-controls="step-3" data-step="3" tabindex="-1"><span class="tab-num">3</span>Stage 2</button>
+            <button type="button" role="tab" aria-selected="false" id="step-tab-4" aria-controls="step-4" data-step="4" tabindex="-1"><span class="tab-num">4</span>Dynamics</button>
+            <button type="button" role="tab" aria-selected="false" id="step-tab-5" aria-controls="step-5" data-step="5" tabindex="-1"><span class="tab-num">5</span>Reward</button>
+          </div>
+          <div class="step-nav">
+            <button type="button" data-step-move="-1" aria-label="Previous step">←</button>
+            <button type="button" data-step-move="1" aria-label="Next step">→</button>
+          </div>
+        </div>
+
+        <div class="pipeline-stage">
+          <img src="assets/images/pipeline.webp" width="2400" height="1053" decoding="async" alt="DiTaR pipeline. Left, encoder pretraining: a frame chunk and instruction are encoded by a frozen Wan VAE into source and target latents; Stage 1 trains a task-irrelevant encoder and decoder with language available; Stage 2 trains a task-relevant encoder with the decoder frozen and language removed. Right, reward for policy learning: a rectified-flow dynamics model conditioned on history and language, whose residual gives the TD flow reward for the RL agent.">
+          <!-- Highlight regions as % of the figure: left, top, width, height. -->
+          <span class="spot" aria-hidden="true"></span>
+        </div>
+
+        <div class="step-panels">
+          <div class="step-panel" role="tabpanel" id="step-0" aria-labelledby="step-tab-0" data-region="">
+            <h4>Two phases: learn the space, then score in it</h4>
+            <p><b>Encoder pretraining</b> (left) learns, from action-free videos paired with instructions, a latent space that keeps task-relevant change and drops visual nuisance. <b>Reward for policy learning</b> (right) checks how well each new transition fits the task's learned dynamics in that space, and rewards the agent when that fit is improving. Step through the parts above.</p>
+          </div>
+          <div class="step-panel" role="tabpanel" id="step-1" aria-labelledby="step-tab-1" data-region="0,0,52.6,30" hidden>
+            <h4>Encode a short clip</h4>
+            <p>A frozen Wan VAE maps a short clip <i>x<sub>t</sub></i> into a <b>source latent</b> <i>V</i><sub>0</sub> and a <b>target latent</b> <i>V</i><sub>1</sub>. Everything after this works on these video latents. No actions or simulator states are needed, only videos and their instructions.</p>
+          </div>
+          <div class="step-panel" role="tabpanel" id="step-2" aria-labelledby="step-tab-2" data-region="0,31.8,26,50.8" hidden>
+            <h4>Stage 1: let language explain the task, park the nuisance</h4>
+            <p>An encoder squeezes the clip into a small, KL-regularized latent <i>z</i><sup>irr</sup>, and a decoder rebuilds the target latent. The decoder can also read the <b>instruction embedding</b>, so the task is already explained by language. The bottleneck therefore spends its limited capacity on what language cannot say: <b>appearance, lighting, background</b>.</p>
+          </div>
+          <div class="step-panel" role="tabpanel" id="step-3" aria-labelledby="step-tab-3" data-region="26.1,31.8,26,50.8" hidden>
+            <h4>Stage 2: remove language, and the task has to go somewhere</h4>
+            <p>Freeze the Stage 1 encoder and decoder, and <b>take away the decoder's language input</b>. A new encoder produces <i>z</i><sup>rel</sup>, which sits where language used to be. With everything else frozen, the only way to rebuild the target is for <i>z</i><sup>rel</sup> to carry the task semantics itself. This is what makes it <b>task-relevant</b>.</p>
+          </div>
+          <div class="step-panel" role="tabpanel" id="step-4" aria-labelledby="step-tab-4" data-region="54,0,46,24.6" hidden>
+            <h4>Learn how the task evolves in that space</h4>
+            <p>A rectified-flow model (MMDiT) learns the <b>task dynamics</b> in the task-relevant space. Given the recent visual history <i>H<sub>t</sub></i> and the instruction <i>e<sub>ℓ</sub></i>, it predicts the clean task-relevant latent <i>z</i><sup>rel</sup> from a noised one. A single model, pretrained mainly on heterogeneous robot videos (AgiBot World, DROID, Bridge), is reused across all tasks.</p>
+          </div>
+          <div class="step-panel" role="tabpanel" id="step-5" aria-labelledby="step-tab-5" data-region="56,26.2,44,56.6" hidden>
+            <h4>Turn "fits the dynamics better" into a dense reward</h4>
+            <div class="eq-row" aria-label="Reward construction">
+              <div class="eq-card">
+                <span class="eq-kicker">Endpoint residual</span>
+                <span class="eq"><i>e<sub>t</sub></i> = ‖ <i>f<sub>θ</sub></i>(<i>z<sub>τ,t</sub></i>, <i>H<sub>t</sub></i>, <i>e<sub>ℓ</sub></i>, <i>τ</i>) − <i>z</i><span class="supsub"><sup>rel</sup><sub><i>t</i></sub></span> ‖<span class="supsub"><sup>2</sup><sub>2</sub></span></span>
+                <span class="eq-note">how far the observed latent is from what the dynamics predict</span>
+              </div>
+              <div class="eq-card">
+                <span class="eq-kicker">Compatibility</span>
+                <span class="eq"><i>φ<sub>t</sub></i> = exp(−<i>e<sub>t</sub></i>)</span>
+                <span class="eq-note">bounded in (0, 1]</span>
+              </div>
+              <div class="eq-card is-ours">
+                <span class="eq-kicker">TD flow reward</span>
+                <span class="eq"><i>r</i><span class="supsub"><sup>TD</sup><sub><i>t</i></sub></span> = <i>φ<sub>t</sub></i> − <i>φ</i><sub><i>t</i>−Δ<i>t</i></sub></span>
+                <span class="eq-note">positive = the execution is progressing</span>
+              </div>
+            </div>
+            <p>An absolute score only says how well a transition fits. Its <b>change over time</b> says whether the execution is getting better, which gives the agent a directional signal. This reward is added as dense shaping on top of the sparse task reward.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="examples" class="section" aria-labelledby="examples-title">
+      <h3 id="examples-title" class="section-title">Examples</h3>
+      <p class="section-lead">A good reward should <b>ignore how the scene looks</b>, and <b>react when the execution goes wrong</b>, even when every single frame looks normal.</p>
+
+      <div class="example-block clip-viewer" data-clip-viewer="appearance">
+        <div class="example-head">
+          <span class="kicker">Appearance changes</span>
+          <h4>The reward should stay put</h4>
+          <p>Same execution, different lighting or camera. The task never changes, so neither should the reward.</p>
+        </div>
+        <div class="clip-toolbar">
+          <div class="segmented" role="group" aria-label="Select appearance change">
+            <button type="button" class="active" aria-pressed="true" data-clip-group="light">Lighting</button>
+            <button type="button" aria-pressed="false" data-clip-group="viewpoint">Camera viewpoint</button>
+            <button type="button" aria-pressed="false" data-clip-group="yaw">Camera rotation</button>
+            <button type="button" aria-pressed="false" data-clip-group="zoom">Camera zoom</button>
+          </div>
+          <div class="clip-pager" data-clip-pager hidden>
+            <button type="button" data-clip-step="-1" aria-label="Previous example">←</button>
+            <span data-clip-index>1 / 1</span>
+            <button type="button" data-clip-step="1" aria-label="Next example">→</button>
+          </div>
+        </div>
+        <div class="clip-media">
+          <video class="autoplay-video" muted loop playsinline preload="metadata" poster="assets/images/posters/lighting.webp" style="aspect-ratio:1280/750" aria-label="Inputs and the reward curves of the compared methods"><source src="assets/videos/lighting.mp4" type="video/mp4"></video>
+        </div>
+        <p class="clip-caption" data-clip-caption>MetaWorld button press under clean, mild and heavy lighting.</p>
+        <p class="shift-line" data-clip-shifts aria-live="polite"><span class="shift-label">Reward shift</span><span class="shift-item">VIPER <b>3.11</b></span><span class="shift-item">Diffusion Reward <b>0.49</b></span><span class="shift-item is-ours">DiTaR <b>0.15</b></span><span class="shift-note">lower is better</span></p>
+      </div>
+
+      <div class="example-block clip-viewer" data-clip-viewer="temporal">
+        <div class="example-head">
+          <span class="kicker">Corrupted execution</span>
+          <h4>The reward should react</h4>
+          <p>Every frame looks normal, but the order or pace of the execution is wrong. A useful reward has to notice.</p>
+        </div>
+        <div class="clip-toolbar">
+          <div class="segmented" role="group" aria-label="Select corruption">
+            <button type="button" class="active" aria-pressed="true" data-clip-group="drift">Backward drift</button>
+            <button type="button" aria-pressed="false" data-clip-group="loop">Looped segments</button>
+            <button type="button" aria-pressed="false" data-clip-group="shuffle">Shuffled segments</button>
+            <button type="button" aria-pressed="false" data-clip-group="quarter">Quarter-length loop</button>
+            <button type="button" aria-pressed="false" data-clip-group="slow">2× slow motion</button>
+          </div>
+          <div class="clip-pager" data-clip-pager hidden>
+            <button type="button" data-clip-step="-1" aria-label="Previous example">←</button>
+            <span data-clip-index>1 / 2</span>
+            <button type="button" data-clip-step="1" aria-label="Next example">→</button>
+          </div>
+        </div>
+        <div class="clip-media">
+          <video class="autoplay-video" muted loop playsinline preload="metadata" poster="assets/images/posters/backward-drift.webp" style="aspect-ratio:1280/736" aria-label="Clean and corrupted inputs with the reward curves of VIPER, Diffusion Reward and DiTaR"><source src="assets/videos/backward-drift.mp4" type="video/mp4"></video>
+        </div>
+        <p class="clip-caption" data-clip-caption>Progress runs backwards while every frame still looks perfectly normal.</p>
+        <p class="shift-line" data-clip-shifts aria-live="polite"><span class="shift-label">Reward shift</span><span class="shift-item">VIPER <b>0.10</b></span><span class="shift-item">Diffusion Reward <b>0.20</b></span><span class="shift-item is-ours">DiTaR <b>0.66</b></span><span class="shift-note">higher = the reward noticed</span></p>
+      </div>
+    </section>
+
+    <section id="citation" class="section" aria-labelledby="citation-title">
+      <h3 id="citation-title" class="section-title">Citation</h3>
+      <div class="bibtex">
+        <button type="button" class="copy-button" data-copy="#bibtex-code" aria-label="Copy BibTeX">Copy</button>
+<pre><code id="bibtex-code">@article{li2026ditar,
+  title   = {Disentangling Task-Relevant Latent Dynamics for Reward Modeling},
+  author  = {Li, Dayou and Wang, Jionghao and Wang, Peihao and Lei, Jiuzhou and
+             Wang, Hao and Chai, Jichen and Hu, Hezhen and Zheng, Minghui and
+             Wang, Zhangyang and Li, Xin and Wang, Wenping and Fan, Zhiwen},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</code></pre>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>Page layout adapted from the <a href="https://touch-scale.github.io/">TouchScale</a> project page, itself based on Strata by HTML5 UP.</p>
+    </footer>
+  </main>
+</body>
+</html>
