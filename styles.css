@@ -165,6 +165,7 @@ html:not(.js) .step-panel+.step-panel{margin-top:1.5em}
 .shift-note{font-style:italic}
 
 /* Citation */
+.citation-soon{margin:0;text-align:center;color:var(--ink-4);font-style:italic}
 .bibtex{position:relative}
 .bibtex pre{margin:0;padding:1.1em 1.25em;overflow-x:auto;background:#f8f7f7;border:1px solid #eee;border-radius:8px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.72em;line-height:1.65;color:#444}
 .copy-button{position:absolute;top:.6em;right:.6em;padding:.15em .7em;border:1px solid #ddd;border-radius:4px;background:#fff;font-size:.75em;line-height:1.6;color:var(--ink-2)}
