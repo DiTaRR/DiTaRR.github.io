@@ -1,0 +1,203 @@
+/* DiTaR project page.
+   Typography and layout follow the TouchScale page (touch-scale.github.io), which adapts
+   the UMI page's stylesheet. Original template: Strata by HTML5 UP, html5up.net | @ajlkn.
+   Free for personal and commercial use under CCA 3.0 (html5up.net/license).
+   Source Sans Pro is served locally to keep the project page standalone. */
+@font-face{font-family:'Source Sans Pro';font-style:normal;font-weight:400;font-display:swap;src:url('assets/fonts/source-sans-pro-latin-400.woff2') format('woff2')}
+@font-face{font-family:'Source Sans Pro';font-style:normal;font-weight:700;font-display:swap;src:url('assets/fonts/source-sans-pro-latin-700.woff2') format('woff2')}
+
+:root{
+  --accent:#b2182b;          /* DiTaR crimson, as in the paper's plots and the teaser */
+  --accent-soft:#fbecee;
+  --band:#fbfbfb;            /* the teaser video's background */
+  --ink:#3d3d3d;             /* strongest text */
+  --ink-2:#5f5f5f;           /* headings */
+  --ink-3:#737373;           /* body copy */
+  --ink-4:#8a8a8a;           /* captions, notes */
+  --line:#ececec;
+  --gutter:1.25em;
+  --math:'STIX Two Text','Cambria Math','Times New Roman',Times,serif;
+}
+*{box-sizing:border-box}
+html,body,div,span,h1,h2,h3,h4,p,a,b,u,strong,figure,figcaption,footer,header,main,section,nav,video,ol,ul,li{margin:0;padding:0;border:0;font:inherit;vertical-align:baseline}
+html{scroll-behavior:smooth}
+body{background:#fff;-webkit-text-size-adjust:100%}
+body{color:var(--ink-3);font-family:'Source Sans Pro',Helvetica,Arial,sans-serif;font-size:16pt;font-weight:400;line-height:1.75em}
+strong,b{color:var(--ink-2);font-weight:700}
+i{font-style:italic}
+p{margin:0 0 2em}
+h1,h2,h3,h4{color:var(--ink-2);font-weight:400;line-height:1.5em;margin:0 0 1em}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,video:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+[hidden]{display:none!important}
+img,video{max-width:100%}
+.skip-link{position:fixed;top:-100px;left:16px;z-index:100;background:#fff;padding:8px 16px}
+.skip-link:focus{top:12px}
+
+/* Reading column (UMI's #main dimensions). */
+.wrap{width:60em;max-width:100%;margin:0 auto;padding-left:4em;padding-right:4em}
+
+/* Header */
+.project-header{padding-top:4.5em;padding-bottom:2.25em;text-align:center}
+.project-header h1{margin:0;color:var(--accent);font-size:300%;font-weight:700;letter-spacing:-.01em;line-height:1.35}
+.project-header h2{margin:0 0 .7em;font-size:180%;white-space:nowrap}
+.author-list,.affiliation-list{display:flex;flex-wrap:wrap;justify-content:center;list-style:none;padding:0}
+.author-list{column-gap:1.15em;row-gap:.2em;margin:0 0 .85em;color:var(--accent);font-size:1.05em;line-height:1.65}
+.author-list li,.affiliation-list li{white-space:nowrap}
+.author-list sup,.affiliation-list sup{position:relative;top:-.45em;vertical-align:baseline;font-size:.65em;line-height:0}
+.author-list sup{margin-left:.13em}
+.affiliation-list{gap:.2em 1.4em;margin:0;font-size:.85em;line-height:1.65;color:var(--ink-2)}
+.contribution-note{display:flex;flex-wrap:wrap;justify-content:center;gap:.2em 1.5em;margin:.35em 0 0;font-size:.8em;line-height:1.5;color:var(--ink-4)}
+.contribution-note sup{position:relative;top:-.4em;margin-right:.15em;vertical-align:baseline;font-size:.75em;line-height:0}
+.affiliation-logos{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1em 2.75em;list-style:none;margin:1.4em auto 0;padding:0}
+.affiliation-logos li{display:flex;align-items:center;justify-content:center;height:2.6em}
+.affiliation-logos img{display:block;width:auto;max-height:100%}
+.affiliation-logos .logo-tamu img{height:2.6em}
+.affiliation-logos .logo-ut img{height:2.35em}
+.affiliation-logos .logo-gt img{height:1.55em}
+
+/* Teaser: same width as the reading column, framed in the video's own background colour. */
+.hero-frame{position:relative;overflow:hidden;border:1px solid #ededed;border-radius:12px;background:var(--band);box-shadow:0 1px 2px #0000000a,0 8px 28px #00000010}
+.hero-inner video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:var(--band)}
+.js .hero-inner video{cursor:pointer}
+/* Round pause/play button, as on the TouchScale video wall. */
+.video-toggle{display:none;position:absolute;right:.9em;bottom:.9em;place-items:center;width:2.25em;height:2.25em;padding:0;border:1px solid #0000001f;border-radius:50%;background:#fffffff0;color:#555;box-shadow:0 2px 8px #00000014}
+.js .video-toggle{display:grid}
+.video-toggle:hover{background:#fff;color:var(--accent)}
+.video-toggle svg{width:1.05em;height:1.05em}
+.video-toggle .icon-play{display:none}
+.video-toggle.is-paused .icon-pause{display:none}
+.video-toggle.is-paused .icon-play{display:block}
+
+/* Summary, links, headline numbers */
+.intro{padding-top:2.25em;text-align:center}
+.tagline{max-width:40em;margin:0 auto 1.25em;color:var(--ink);font-size:1.1em;line-height:1.6;text-wrap:balance}
+.tagline b{color:var(--accent)}
+.link-pills{display:flex;flex-wrap:wrap;justify-content:center;gap:.6em;margin-bottom:2.75em}
+.pill{display:inline-flex;align-items:center;gap:.45em;padding:.35em 1.05em .35em .85em;border:1px solid #e2e2e2;border-radius:999px;background:#fff;color:var(--ink);font-size:.9em;line-height:1.5;text-decoration:none;transition:border-color .15s,color .15s,background .15s}
+.pill svg{width:1.15em;height:1.15em;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.pill small{font-size:.78em;color:var(--ink-4)}
+a.pill:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);text-decoration:none}
+.pill.is-soon{color:var(--ink-4);border-style:dashed;cursor:default}
+.highlights{display:grid;grid-template-columns:repeat(3,1fr)}
+.highlight{display:flex;flex-direction:column;align-items:center;gap:.1em;padding:0 .75em}
+.highlight+.highlight{border-left:1px solid var(--line)}
+.highlight strong{color:var(--accent);font-size:2.6em;font-weight:700;line-height:1.25;white-space:nowrap}
+.highlight .unit{font-size:.55em;margin-left:.05em}
+.hl-label{color:var(--ink-2);font-size:.95em;line-height:1.5}
+.hl-note{color:var(--ink-4);font-size:.75em;line-height:1.5}
+
+/* Sections: centred title with a short crimson rule, as in the teaser. */
+.section{padding-top:4.5em}
+.section-title{margin:0 0 1.5em;text-align:center;color:var(--ink);font-size:1.45em;line-height:1.4}
+.section-title::after{content:'';display:block;width:2.2em;height:2px;margin:.55em auto 0;background:var(--accent);border-radius:2px}
+.section-lead{max-width:38em;margin:0 auto 1.75em;text-align:center;line-height:1.7;text-wrap:balance}
+.section-lead b{color:var(--ink)}
+.kicker{display:block;margin-bottom:.35em;font-size:.7em;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--ink-2)}
+
+/* Problem / idea */
+.framing{display:grid;grid-template-columns:1fr 1fr;gap:1em;margin-bottom:2.5em}
+.frame-card{padding:1.1em 1.25em;border:1px solid var(--line);border-radius:10px;background:#fafafa}
+.frame-card p{margin:0;font-size:.95em;line-height:1.7}
+.frame-card.is-idea{border-color:#f0cfd3;background:var(--accent-soft)}
+.frame-card.is-idea .kicker{color:var(--accent)}
+.frame-card.is-idea p{color:var(--ink-2)}
+
+/* Segmented control (tabs and clip selector) */
+.segmented{display:flex;flex-wrap:wrap;align-items:center;gap:.35em 1.25em}
+.segmented button{display:inline-flex;align-items:center;gap:.4em;padding:0 0 .3em;border:0;border-bottom:2px solid transparent;background:transparent;font-size:.95em;line-height:1.5;color:var(--ink-3)}
+.segmented button:hover{color:var(--ink)}
+.segmented button.active{border-bottom-color:var(--accent);color:var(--accent)}
+
+/* Method walkthrough: one figure, one highlighted region per step. */
+.step-toolbar{display:flex;justify-content:space-between;align-items:flex-end;gap:1em;margin-bottom:1em}
+.tab-num{display:inline-grid;place-items:center;width:1.35em;height:1.35em;border:1.5px solid currentColor;border-radius:50%;font-size:.75em;font-weight:700;line-height:1}
+.pipeline-stage{position:relative;overflow:hidden;border-radius:6px}
+.pipeline-stage img{display:block;width:100%;height:auto}
+.spot{position:absolute;left:var(--x,0);top:var(--y,0);width:var(--w,100%);height:var(--h,100%);border-radius:10px;outline:2px solid transparent;outline-offset:-2px;box-shadow:0 0 0 200vmax rgba(255,255,255,0);pointer-events:none;
+  transition:left .45s cubic-bezier(.2,.7,.2,1),top .45s cubic-bezier(.2,.7,.2,1),width .45s cubic-bezier(.2,.7,.2,1),height .45s cubic-bezier(.2,.7,.2,1),box-shadow .3s,outline-color .3s}
+.pipeline-stage.has-spot .spot{outline-color:var(--accent);box-shadow:0 0 0 200vmax rgba(255,255,255,.74)}
+.step-panels{margin-top:1.25em}
+.step-panel h4{margin:0 0 .4em;font-size:1.05em;color:var(--ink)}
+.step-panel p{margin:0}
+html:not(.js) .step-panel+.step-panel{margin-top:1.5em}
+.step-panel i{font-family:var(--math)}
+.step-panel p sub,.step-panel p sup{line-height:0}
+.step-nav{display:none;gap:.5em;padding-bottom:.3em}
+.js .step-nav{display:flex}
+.step-nav button{width:2em;height:1.8em;border:1px solid #ddd;border-radius:4px;background:#fff;font-size:.9em;line-height:1;color:var(--ink-2)}
+.step-nav button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+.step-nav button:disabled{opacity:.4;cursor:default}
+
+.eq-row{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:.75em;margin:.25em 0 1em}
+.eq-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35em;padding:.9em .75em;border:1px solid #eee;border-radius:8px;background:#fcfbfb;text-align:center}
+.eq-card.is-ours{border-color:#efc9ce;background:var(--accent-soft)}
+.eq-kicker{font-size:.7em;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--ink-2)}
+.eq-card.is-ours .eq-kicker{color:var(--accent)}
+.eq{font-family:var(--math);font-size:1.05em;line-height:1.6;color:#222;white-space:nowrap}
+.eq sub,.eq sup{font-size:.68em;line-height:0}
+/* Stacked super/subscript: the flex baseline is the superscript's, so lift it ~.37em of the parent. */
+.supsub{display:inline-flex;flex-direction:column;vertical-align:.55em;font-size:.68em;line-height:1.05;margin-left:.04em}
+.supsub sup,.supsub sub{font-size:1em;line-height:1.05;vertical-align:baseline;position:static}
+.eq-note{font-size:.75em;line-height:1.4;color:var(--ink-4)}
+
+/* Examples: two families, each with its own player. */
+.example-block+.example-block{margin-top:3em;padding-top:2.75em;border-top:1px solid var(--line)}
+.example-head{margin-bottom:1.1em}
+.example-head .kicker{color:var(--accent)}
+.example-head h4{margin:0 0 .2em;font-size:1.15em;line-height:1.4;color:var(--ink)}
+.example-head p{margin:0;font-size:.95em;line-height:1.6}
+.clip-toolbar{display:flex;justify-content:space-between;align-items:flex-end;gap:1em;margin-bottom:1em}
+.clip-pager{display:flex;align-items:center;gap:.5em;font-size:.85em;color:var(--ink-4);white-space:nowrap}
+.clip-pager button{width:2em;height:1.8em;border:1px solid #ddd;border-radius:4px;background:#fff;font-size:1em;line-height:1;color:var(--ink-2)}
+.clip-pager button:hover{border-color:var(--accent);color:var(--accent)}
+.clip-media video{display:block;width:100%;height:auto;background:#fff}
+.clip-caption{margin:1em 0 .35em;text-align:center;color:var(--ink)}
+.shift-line{display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:.25em 1.1em;margin:0;font-size:.85em;line-height:1.6;color:var(--ink-4)}
+.shift-line b{color:var(--ink-2);font-variant-numeric:tabular-nums}
+.shift-item{white-space:nowrap}
+.shift-item::before{content:'';display:inline-block;width:.6em;height:.6em;margin-right:.4em;border-radius:2px;background:#cfc8c7;vertical-align:.05em}
+.shift-item.is-ours::before{background:var(--accent)}
+.shift-item.is-ours b{color:var(--accent)}
+.shift-label{white-space:nowrap}
+.shift-note{font-style:italic}
+
+/* Citation */
+.bibtex{position:relative}
+.bibtex pre{margin:0;padding:1.1em 1.25em;overflow-x:auto;background:#f8f7f7;border:1px solid #eee;border-radius:8px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.72em;line-height:1.65;color:#444}
+.copy-button{position:absolute;top:.6em;right:.6em;padding:.15em .7em;border:1px solid #ddd;border-radius:4px;background:#fff;font-size:.75em;line-height:1.6;color:var(--ink-2)}
+.copy-button:hover,.copy-button.is-done{border-color:var(--accent);color:var(--accent)}
+
+.site-footer{margin-top:4.5em;padding:1.5em 0 2em;border-top:1px solid var(--line);text-align:center}
+.site-footer p{margin:0;font-size:.75em;line-height:1.6;color:var(--ink-4)}
+
+/* Breakpoints follow UMI/TouchScale, plus a single-column phone layout. */
+@media screen and (max-width:1800px){body{font-size:12pt}}
+@media screen and (max-width:1280px){:root{--gutter:1em}.wrap{padding-right:3em;padding-left:3em}}
+@media screen and (max-width:900px){
+  .project-header h2{white-space:normal;text-wrap:balance}
+  .eq-row{grid-template-columns:1fr}
+}
+@media screen and (max-width:736px){
+  :root{--gutter:.75em}
+  .wrap{padding-left:16px;padding-right:16px}
+  .project-header{padding-top:2.5em;padding-bottom:1.75em}
+  .project-header h1{font-size:250%}
+  .project-header h2{font-size:1.35em;line-height:1.35}
+  .author-list{column-gap:.9em;font-size:1em}
+  .affiliation-list{flex-direction:column;align-items:center;gap:0}
+  .affiliation-logos{gap:.75em 1.75em}
+  .hero-frame{border-radius:8px}
+  .video-toggle{right:.4em;bottom:.4em;width:1.85em;height:1.85em}
+  .tagline{font-size:1em}
+  .highlights{grid-template-columns:1fr;gap:1.1em}
+  .highlight+.highlight{border-left:0;border-top:1px solid var(--line);padding-top:1.1em}
+  .section{padding-top:3.25em}
+  .framing{grid-template-columns:1fr}
+  .step-toolbar,.clip-toolbar{flex-direction:column;align-items:flex-start}
+  .step-tabs{gap:.35em 1em}
+  .eq{font-size:.95em;white-space:normal}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
