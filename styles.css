@@ -171,8 +171,7 @@ html:not(.js) .step-panel+.step-panel{margin-top:1.5em}
 .copy-button{position:absolute;top:.6em;right:.6em;padding:.15em .7em;border:1px solid #ddd;border-radius:4px;background:#fff;font-size:.75em;line-height:1.6;color:var(--ink-2)}
 .copy-button:hover,.copy-button.is-done{border-color:var(--accent);color:var(--accent)}
 
-.site-footer{margin-top:4.5em;padding:1.5em 0 2em;border-top:1px solid var(--line);text-align:center}
-.site-footer p{margin:0;font-size:.75em;line-height:1.6;color:var(--ink-4)}
+#main{padding-bottom:5em}
 
 /* Breakpoints follow UMI/TouchScale, plus a single-column phone layout. */
 @media screen and (max-width:1800px){body{font-size:12pt}}
