@@ -45,77 +45,49 @@
     autoVideos.forEach(tryPlay);
   }
 
-  /* ---------- Teaser pause/play button (clicking the video does the same) ---------- */
-  document.querySelectorAll('[data-video-toggle]').forEach(btn => {
-    const video = document.getElementById(btn.dataset.videoToggle);
+  /* Keep playback controls outside the image so they never cover a curve or formula. */
+  autoVideos.forEach(video => {
+    const controls = document.createElement('div');
+    controls.className = 'player-controls';
+    const play = document.createElement('button');
+    play.type = 'button';
+    const seek = document.createElement('input');
+    seek.type = 'range'; seek.min = '0'; seek.max = '100'; seek.step = '0.1'; seek.value = '0';
+    seek.setAttribute('aria-label', 'Video progress');
+    const time = document.createElement('span');
+    time.className = 'player-time';
+    const expand = document.createElement('button');
+    expand.type = 'button'; expand.textContent = '⛶'; expand.className = 'player-expand';
+    expand.setAttribute('aria-label', 'View video fullscreen');
+    controls.append(play, seek, time, expand);
+    video.after(controls);
+    video.controls = false;
+    const clock = seconds => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, '0')}`;
     const sync = () => {
-      btn.classList.toggle('is-paused', video.paused);
-      btn.setAttribute('aria-label', video.paused ? 'Play video' : 'Pause video');
+      play.textContent = video.paused ? 'Play' : 'Pause';
+      play.setAttribute('aria-label', video.paused ? 'Play video' : 'Pause video');
+      const duration = Number.isFinite(video.duration) ? video.duration : 0;
+      seek.value = duration ? String(video.currentTime / duration * 100) : '0';
+      seek.disabled = !duration;
+      time.textContent = `${clock(video.currentTime)} / ${clock(duration)}`;
     };
-    const toggle = () => {
+    play.addEventListener('click', () => {
       if (video.paused) {
         userPaused.delete(video);
-        const p = video.play();
-        if (p && p.catch) p.catch(() => {});
-      } else {
-        video.pause();
-      }
-    };
-    btn.addEventListener('click', toggle);
-    video.addEventListener('click', toggle);
-    video.addEventListener('play', sync);
-    video.addEventListener('pause', sync);
+        video.play().catch(() => { video.controls = true; });
+      } else video.pause();
+    });
+    seek.addEventListener('input', () => {
+      if (Number.isFinite(video.duration)) video.currentTime = Number(seek.value) / 100 * video.duration;
+    });
+    expand.addEventListener('click', () => {
+      if (video.requestFullscreen) video.requestFullscreen().catch(() => {});
+      else if (video.webkitEnterFullscreen) video.webkitEnterFullscreen();
+    });
+    video.addEventListener('fullscreenchange', () => { video.controls = document.fullscreenElement === video; });
+    ['play', 'pause', 'timeupdate', 'loadedmetadata', 'emptied'].forEach(event => video.addEventListener(event, sync));
     sync();
   });
-
-  /* ---------- Method walkthrough ---------- */
-  const walk = document.querySelector('[data-walkthrough]');
-  if (walk) {
-    const tabs = [...walk.querySelectorAll('[role="tab"]')];
-    const stage = walk.querySelector('.pipeline-stage');
-    const spot = walk.querySelector('.spot');
-    const [prev, next] = walk.querySelectorAll('[data-step-move]');
-    let current = 0;
-
-    function select(i, focus) {
-      current = i;
-      tabs.forEach((t, j) => {
-        const on = j === i;
-        t.classList.toggle('active', on);
-        t.setAttribute('aria-selected', String(on));
-        t.tabIndex = on ? 0 : -1;
-        const panel = document.getElementById(t.getAttribute('aria-controls'));
-        panel.hidden = !on;
-        if (on) {
-          const region = panel.dataset.region;
-          stage.classList.toggle('has-spot', Boolean(region));
-          if (region) {
-            const [x, y, w, h] = region.split(',');
-            spot.style.setProperty('--x', `${x}%`);
-            spot.style.setProperty('--y', `${y}%`);
-            spot.style.setProperty('--w', `${w}%`);
-            spot.style.setProperty('--h', `${h}%`);
-          }
-        }
-      });
-      prev.disabled = i === 0;
-      next.disabled = i === tabs.length - 1;
-      if (focus) tabs[i].focus();
-    }
-
-    tabs.forEach((tab, i) => {
-      tab.addEventListener('click', () => select(i, false));
-      tab.addEventListener('keydown', e => {
-        const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
-        if (!step) return;
-        e.preventDefault();
-        select((i + step + tabs.length) % tabs.length, true);
-      });
-    });
-    prev.addEventListener('click', () => select(Math.max(0, current - 1), false));
-    next.addEventListener('click', () => select(Math.min(tabs.length - 1, current + 1), false));
-    select(0, false);
-  }
 
   /* ---------- Example clips ---------- */
   // Each viewer shows one family of examples. Scores are read from the end of each clip.
@@ -123,18 +95,13 @@
   // executions should move it (higher is better).
   const VIPER = 'VIPER', DIFF = 'Diffusion Reward', REWIND = 'ReWiND', OURS = 'DiTaR';
   const VIEWERS = {
-    appearance: {
+    camera: {
       defaults: { label: 'Δ normalized MAE', note: 'lower is better', aspect: '16/9' },
       clips: {
-        light: [
-          { src: 'lighting', label: 'Reward shift', aspect: '1280/750',
-            scores: [[VIPER, '3.11'], [DIFF, '0.49'], [OURS, '0.15']],
-            caption: 'MetaWorld button press under clean, mild and heavy lighting.' }
-        ],
         viewpoint: [
           { src: 'camera-viewpoint',
             scores: [[VIPER, '0.228'], [DIFF, '0.259'], [REWIND, '0.229'], [OURS, '0.082']],
-            caption: 'ManiSkill Push-T: the same rollout seen from a left and a right camera.' }
+            caption: 'ManiSkill Push-T: the same demonstration seen from left and right cameras.' }
         ],
         yaw: [
           { src: 'camera-yaw',
@@ -149,11 +116,11 @@
       }
     },
     temporal: {
-      defaults: { label: 'Reward shift', note: 'higher = the reward noticed', aspect: '1280/736' },
+      defaults: { label: 'Reward shift', note: 'larger response to disruption', aspect: '1760/780' },
       clips: {
         drift: [
           { src: 'backward-drift', scores: [[VIPER, '0.10'], [DIFF, '0.20'], [OURS, '0.66']],
-            caption: 'Progress runs backwards while every frame still looks perfectly normal.' }
+            caption: 'Real-world demonstration with synthetic backward drift: task progress is reversed.' }
         ],
         loop: [
           { src: 'looped-segments-a', scores: [[VIPER, '0.12'], [DIFF, '0.18'], [OURS, '0.67']],
@@ -217,7 +184,7 @@
       userPaused.delete(video);
       video.style.aspectRatio = clip.aspect;
       video.poster = `assets/images/posters/${clip.src}.webp`;
-      source.src = `assets/videos/${clip.src}.mp4`;
+      source.src = `assets/videos/${clip.src}.mp4?v=short-loops-2`;
       video.load();
       if (visible.get(video)) tryPlay(video);
       caption.textContent = clip.caption;

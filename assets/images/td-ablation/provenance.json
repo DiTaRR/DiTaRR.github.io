@@ -1,0 +1,16 @@
+{
+  "source": "DiTaR paper, Figure 5: Ablation on temporal-difference reward",
+  "source_file": "fig5_td_ablation.pdf",
+  "sha256": "8fd4ca3e0ae8084abee2c2113ee9022ef9c798eba9fa22efcc10ff87b5a93b29",
+  "representation": "Original opaque vector curve paths, affine-scaled to website panels. Numerical ticks and faint variability traces omitted. No resampling, fitting, or synthetic data.",
+  "series": {
+    "TD": "temporal difference of compatibility",
+    "Non-TD": "absolute compatibility"
+  },
+  "panels": [
+    "Coffee Pull",
+    "Dial Turn",
+    "Faucet Open",
+    "Push Cube"
+  ]
+}
