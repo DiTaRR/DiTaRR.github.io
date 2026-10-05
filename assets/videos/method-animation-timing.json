@@ -1,0 +1,41 @@
+[
+  {
+    "file": "method-wan.mp4",
+    "source": "native Keynote export, v5",
+    "source_slide_start_seconds": 54.85,
+    "source_slide_in_seconds": 0.84,
+    "last_visible_build_source_id": 40,
+    "last_visible_build_complete_seconds": 12.6,
+    "source_slide_out_seconds": 13.08,
+    "playback_rate": 1.6,
+    "duration_seconds": 7.65,
+    "final_hold_seconds": 0.3,
+    "editing": "One continuous interval; all intermediate fades and token builds retained."
+  },
+  {
+    "file": "method-stage1.mp4",
+    "source": "native Keynote export, v5",
+    "source_slide_start_seconds": 70.45,
+    "source_slide_in_seconds": 0.84,
+    "last_visible_build_source_id": 60,
+    "last_visible_build_complete_seconds": 17.5,
+    "source_slide_out_seconds": 18.025,
+    "playback_rate": 1.75,
+    "duration_seconds": 9.82,
+    "final_hold_seconds": 0.3,
+    "editing": "One continuous interval; all intermediate fades and token builds retained."
+  },
+  {
+    "file": "method-stage2.mp4",
+    "source": "native Keynote export, v5",
+    "source_slide_start_seconds": 92.21,
+    "source_slide_in_seconds": 0.84,
+    "last_visible_build_source_id": 62,
+    "last_visible_build_complete_seconds": 17.5,
+    "source_slide_out_seconds": 18.025,
+    "playback_rate": 1.75,
+    "duration_seconds": 9.82,
+    "final_hold_seconds": 0.3,
+    "editing": "One continuous interval; all intermediate fades and token builds retained."
+  }
+]
