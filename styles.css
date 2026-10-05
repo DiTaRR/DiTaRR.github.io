@@ -302,5 +302,7 @@ html:not(.js) .step-panel+.step-panel{margin-top:1.5em}
 .td-chart h6{margin:0 0 .5em;text-align:center;font-size:1em;font-weight:400;line-height:1.35;color:var(--ink)}
 .td-chart h6 span{display:block;font-size:.72em;color:var(--ink-4);margin-bottom:.25em}
 .td-chart img{display:block;width:100%;height:auto}
-.td-ablation figcaption{font-size:.85em;line-height:1.6;color:var(--ink-3);max-width:45em;margin:1.2em auto 0;text-align:center}
+.td-ablation figcaption{font-size:.85em;line-height:1.6;color:var(--ink-3);margin:1.2em 0 0;text-align:left;text-wrap:pretty}
+/* Closing note of the reward block: same size, colour and left edge as the ablation caption above it. */
+.reward-block>.method-note{font-size:.85em!important;line-height:1.6;color:var(--ink-3);text-wrap:pretty}
 @media screen and (max-width:600px){.td-chart-grid{grid-template-columns:1fr;gap:1.5em}.td-legend{gap:.6em 1.2em}}
