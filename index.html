@@ -172,7 +172,7 @@
           <p class="method-note">Pretraining uses videos paired with task instructions. No action labels or privileged simulator states are needed.</p>
         </div>
         <div class="method-media">
-          <video class="autoplay-video" muted loop playsinline controls preload="metadata" width="1100" height="730" poster="assets/images/posters/method-wan.webp?v=complete-builds-3" aria-label="Keynote animation: a short video clip passes through a frozen Wan VAE to produce source and target latents"><source src="assets/videos/method-wan.mp4?v=complete-builds-3" type="video/mp4"></video>
+          <video class="autoplay-video" muted loop playsinline controls preload="metadata" width="1100" height="730" poster="assets/images/posters/method-wan.webp?v=method-reading-hold-4" aria-label="Keynote animation: a short video clip passes through a frozen Wan VAE to produce source and target latents"><source src="assets/videos/method-wan.mp4?v=method-reading-hold-4" type="video/mp4"></video>
         </div>
       </article>
 
@@ -185,7 +185,7 @@
           <div class="design-heading"><span class="design-number">1</span><h4>Let language explain the task</h4></div>
           <p>The decoder receives the task instruction. A capacity-limited latent is encouraged to capture the remaining visual variation, such as lighting and background.</p>
           <div class="method-media">
-            <video class="autoplay-video" muted loop playsinline controls preload="metadata" width="880" height="780" poster="assets/images/posters/method-stage1.webp?v=complete-builds-3" aria-label="Stage 1 animation: train an encoder and a language-conditioned decoder with a KL-regularized task-irrelevant latent"><source src="assets/videos/method-stage1.mp4?v=complete-builds-3" type="video/mp4"></video>
+            <video class="autoplay-video" muted loop playsinline controls preload="metadata" width="880" height="780" poster="assets/images/posters/method-stage1.webp?v=method-reading-hold-4" aria-label="Stage 1 animation: train an encoder and a language-conditioned decoder with a KL-regularized task-irrelevant latent"><source src="assets/videos/method-stage1.mp4?v=method-reading-hold-4" type="video/mp4"></video>
           </div>
           <p class="design-takeaway"><span class="latent-dot nuisance"></span>Learn a task-irrelevant latent</p>
         </article>
@@ -193,7 +193,7 @@
           <div class="design-heading"><span class="design-number">2</span><h4>Recover the task from video</h4></div>
           <p>Freeze the first encoder and decoder, then remove the decoder’s language input. A new encoder learns a task-relevant latent that takes language’s place.</p>
           <div class="method-media">
-            <video class="autoplay-video" muted loop playsinline controls preload="metadata" width="880" height="780" poster="assets/images/posters/method-stage2.webp?v=complete-builds-3" aria-label="Stage 2 animation: freeze the Stage 1 modules and replace the decoder's language input with a learned task-relevant latent"><source src="assets/videos/method-stage2.mp4?v=complete-builds-3" type="video/mp4"></video>
+            <video class="autoplay-video" muted loop playsinline controls preload="metadata" width="880" height="780" poster="assets/images/posters/method-stage2.webp?v=method-reading-hold-4" aria-label="Stage 2 animation: freeze the Stage 1 modules and replace the decoder's language input with a learned task-relevant latent"><source src="assets/videos/method-stage2.mp4?v=method-reading-hold-4" type="video/mp4"></video>
           </div>
           <p class="design-takeaway"><span class="latent-dot task"></span>Learn a task-relevant latent</p>
         </article>

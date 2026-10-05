@@ -8,9 +8,9 @@
     "last_visible_build_complete_seconds": 12.6,
     "source_slide_out_seconds": 13.08,
     "playback_rate": 1.6,
-    "duration_seconds": 7.65,
-    "final_hold_seconds": 0.3,
-    "editing": "One continuous interval; all intermediate fades and token builds retained."
+    "duration_seconds": 10.35,
+    "final_hold_seconds": 3.0,
+    "editing": "One continuous animation; all intermediate fades and token builds retained. The completed final frame is held for reading."
   },
   {
     "file": "method-stage1.mp4",
@@ -21,9 +21,9 @@
     "last_visible_build_complete_seconds": 17.5,
     "source_slide_out_seconds": 18.025,
     "playback_rate": 1.75,
-    "duration_seconds": 9.82,
-    "final_hold_seconds": 0.3,
-    "editing": "One continuous interval; all intermediate fades and token builds retained."
+    "duration_seconds": 12.52,
+    "final_hold_seconds": 3.0,
+    "editing": "One continuous animation; all intermediate fades and token builds retained. The completed final frame is held for reading."
   },
   {
     "file": "method-stage2.mp4",
@@ -34,8 +34,8 @@
     "last_visible_build_complete_seconds": 17.5,
     "source_slide_out_seconds": 18.025,
     "playback_rate": 1.75,
-    "duration_seconds": 9.82,
-    "final_hold_seconds": 0.3,
-    "editing": "One continuous interval; all intermediate fades and token builds retained."
+    "duration_seconds": 12.52,
+    "final_hold_seconds": 3.0,
+    "editing": "One continuous animation; all intermediate fades and token builds retained. The completed final frame is held for reading."
   }
 ]
